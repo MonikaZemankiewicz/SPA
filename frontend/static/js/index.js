@@ -1,3 +1,8 @@
+const navigateTo = (url) => {
+  history.pushState(null, null, url);
+  router();
+};
+
 const router = async () => {
   const routes = [
     { path: "/", view: () => console.log("Viewing home") },
@@ -22,9 +27,16 @@ const router = async () => {
     };
   }
 
-  console.log(match);
+  console.log(match.route.view());
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  //prevents page reload/redirect while navigating to a page from the navbar (prevents actually following the link, navigates to the link url instead; prevents making a new HTTP request?)
+  document.body.addEventListener("click", (e) => {
+    if (e.target.matches("[data-link]")) {
+      e.preventDefault();
+      navigateTo(e.target.href);
+    }
+  });
   router();
 });
