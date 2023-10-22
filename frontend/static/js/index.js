@@ -30,6 +30,9 @@ const router = async () => {
   console.log(match.route.view());
 };
 
+//added so that the routes are re-run during history navigation
+window.addEventListener("popstate", router);
+
 document.addEventListener("DOMContentLoaded", () => {
   //prevents page reload/redirect while navigating to a page from the navbar (prevents actually following the link, navigates to the link url instead; prevents making a new HTTP request?)
   document.body.addEventListener("click", (e) => {
